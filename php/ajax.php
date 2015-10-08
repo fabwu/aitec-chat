@@ -38,6 +38,10 @@ try {
             $response = Chat::login($_POST['name'], $_POST['password']);
             break;
 
+        case 'register':
+            $response = Chat::register($_POST['name'], $_POST['email'], $_POST['password'], $_POST['confirmPassword']);
+            break;
+
         case 'checkLogged':
             $response = Chat::checkLogged();
             break;

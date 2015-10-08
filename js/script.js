@@ -53,6 +53,29 @@ var chat = {
             return false;
         });
 
+        // Register a person in the chat:
+
+        $('#registerForm').submit(function () {
+
+            if (working) return false;
+            working = true;
+
+            // Using our chatPOST wrapper function
+            // (defined in the bottom):
+
+            $.chatPOST('register', $(this).serialize(), function (r) {
+                working = false;
+
+                if (r.error) {
+                    chat.displayError(r.error);
+                } else {
+                    $('#registerForm')[0].reset();
+                    chat.displaySuccess("Registration successful.");
+                }
+            });
+            return false;
+        });
+
         // Submitting a new chat entry:
 
         $('#submitForm').submit(function () {
@@ -107,6 +130,7 @@ var chat = {
 
             $('#submitForm').fadeOut(function () {
                 $('#loginForm').fadeIn();
+                $('#registerForm').fadeIn();
             });
 
             $.chatPOST('logout');
@@ -143,6 +167,8 @@ var chat = {
         chat.data.gravatar = gravatar;
         $('#chatTopBar').html(chat.render('loginTopBar', chat.data));
 
+
+        $('#registerForm').fadeOut();
         $('#loginForm').fadeOut(function () {
             $('#submitForm').fadeIn();
             $('#chatText').focus();
@@ -331,7 +357,26 @@ var chat = {
 
         setTimeout(function () {
             elem.click();
-        }, 5000);
+        }, 10000);
+
+        elem.hide().appendTo('body').slideDown();
+    },
+
+    displaySuccess: function (msg) {
+        var elem = $('<div>', {
+            id: 'chatSuccessMessage',
+            html: msg
+        });
+
+        elem.click(function () {
+            $(this).fadeOut(function () {
+                $(this).remove();
+            });
+        });
+
+        setTimeout(function () {
+            elem.click();
+        }, 10000);
 
         elem.hide().appendTo('body').slideDown();
     }

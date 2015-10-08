@@ -27,6 +27,15 @@
             <input type="submit" class="blueButton" value="Login"/>
         </form>
 
+        <form id="registerForm" method="post" action="">
+            <hr style="margin: 10px;">
+            <input type="text" id="register_name" name="name" class="rounded" maxlength="16" placeholder="Nickname"/>
+            <input type="email" id="register_email" name="email" class="rounded" placeholder="E-Mail"/>
+            <input type="password" id="register_password" name="password" class="rounded" placeholder="Passwort"/>
+            <input type="password" id="register_confirmPassword" name="confirmPassword" class="rounded" placeholder="Passwort bestätigen"/>
+            <input type="submit" class="blueButton" value="Register"/>
+        </form>
+
         <form id="submitForm" method="post" action="">
             <input id="chatText" name="chatText" class="rounded" maxlength="255"/>
             <input type="submit" class="blueButton" value="Submit"/>

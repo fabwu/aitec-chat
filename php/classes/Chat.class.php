@@ -42,22 +42,37 @@ class Chat
             throw new Exception('Fill in all the required fields.');
         }
 
+        if(!ctype_alnum($name)) {
+            throw new Exception("Nickname not alphanumeric.");
+        }
+
         if (!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
             throw new Exception('Your email is invalid.');
         }
 
-        // Preparing the gravatar hash:
+        if(strcmp($password, $confirmPassword) != 0) {
+            throw new Exception("Passwords don't match.");
+        }
+
         $gravatar = md5(strtolower(trim($email)));
 
         $user = new ChatUser(array(
             'name' => $name,
+            'email' => $email,
+            //TODO hash PW
+            'password' => $password,
             'gravatar' => $gravatar
         ));
 
         // The save method returns a MySQLi object
-        if ($user->save()->affected_rows != 1) {
-            throw new Exception('This nick is in use.');
+        $mysqli = $user->save();
+        if ($mysqli->affected_rows != 1) {
+            throw new Exception($mysqli->error);
         }
+
+        return array(
+            'status' => 1
+        );
     }
 
     public static function checkLogged()

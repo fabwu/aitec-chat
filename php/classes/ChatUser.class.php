@@ -3,10 +3,10 @@
 class ChatUser extends ChatBase
 {
 
-    private $name = '';
-    private $gravatar = '';
-    private $email = '';
-    private $password = '';
+    protected $name = '';
+    protected $gravatar = '';
+    protected $email = '';
+    protected $password = '';
 
     public static function get($name)
     {
@@ -23,8 +23,8 @@ class ChatUser extends ChatBase
 			INSERT INTO webchat_users (name, gravatar, email, password)
 			VALUES (
 				'" . DB::esc($this->name) . "',
-				'" . DB::esc($this->gravatar) . "'
-				'" . DB::esc($this->email) . "'
+				'" . DB::esc($this->gravatar) . "',
+				'" . DB::esc($this->email) . "',
 				'" . DB::esc($this->password) . "'
 		)");
 
@@ -37,8 +37,8 @@ class ChatUser extends ChatBase
 			INSERT INTO webchat_users (name, gravatar, email, password)
 			VALUES (
 	            '" . DB::esc($this->name) . "',
-				'" . DB::esc($this->gravatar) . "'
-				'" . DB::esc($this->email) . "'
+				'" . DB::esc($this->gravatar) . "',
+				'" . DB::esc($this->email) . "',
 				'" . DB::esc($this->password) . "'
 			) ON DUPLICATE KEY UPDATE last_activity = NOW()");
     }
