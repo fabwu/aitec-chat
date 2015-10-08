@@ -14,16 +14,15 @@ Eine PHP-Übung welche im Modul AITEC an der Hochschule Luzern bearbeitet wird.
 - Es fehlen aber eine Userverwaltung (Registrierung, Freischaltung, etc.) sowie eine solide Inputvalidation
 
 ## Aufgaben
-- [ ] Codebasis auf dem virtuellen System zum Laufen bringen
+- [X] Codebasis auf dem virtuellen System zum Laufen bringen
 
 Ergänzen der Codebasis mit einer Benutzerverwaltung mit folgenden Funktionen:
-- [ ] Registrierung
+- [X] Registrierung
 - [ ] Freischaltung von neuen Usern durch Admin
 - [ ] Sperren/Löschen von Usern durch Admin
 - [ ] Adminzugang
-
 - [ ] Solide Inputvalidation, sowohl bei der Registrierung als auch im Chat selbst
 
 Hidden Agenda:
 - [ ] Abhängigkeiten von Libraries im Netz lösen
-- [ ] Rausfinden, was es mit diesen Gravataren auf sich hat
+- [X] Rausfinden, was es mit diesen Gravataren auf sich hat
