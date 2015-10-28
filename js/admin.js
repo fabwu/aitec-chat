@@ -102,8 +102,6 @@ var chat = {
                 }
             }
 
-            console.log(users);
-
             $('#userTable').html(users.join(''));
 
             setTimeout(callback, 1000);

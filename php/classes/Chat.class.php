@@ -17,6 +17,10 @@ class Chat
             throw new Exception('Your nickname or password is invalid.');
         }
 
+        if(!$user->is_active) {
+            throw new Exception("Your account is not active.");
+        }
+
         $user->login();
 
         $_SESSION['user'] = array(

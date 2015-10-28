@@ -188,7 +188,7 @@ var chat = {
                 arr = [
                     '<span><img src="', params.gravatar, '" width="23" height="23" />',
                     '<span class="name">', params.name, '</span>'];
-                if (params.isAdmin) {
+                if (params.isAdmin != 0) {
                     arr.push('<a href="admin.html" class="adminButton rounded">Admin</a>');
                 }
                 arr.push('<a href="" class="logoutButton rounded">Logout</a></span>');

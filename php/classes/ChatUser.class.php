@@ -8,6 +8,7 @@ class ChatUser extends ChatBase
     public $email = '';
     public $password = '';
     public $is_admin = false;
+    public $is_active = false;
 
     public static function getAll()
     {
@@ -33,7 +34,8 @@ class ChatUser extends ChatBase
             'gravatar' => $object->gravatar,
             'email' => $object->email,
             'password' => $object->password,
-            'is_admin' => $object->is_admin
+            'is_admin' => $object->is_admin,
+            'is_active' => $object->is_active
         ));
 
         return $user;
