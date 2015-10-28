@@ -48,7 +48,7 @@ var chat = {
                 if (r.error) {
                     chat.displayError(r.error);
                 }
-                else chat.login(r.name, r.gravatar);
+                else chat.login(r.name, r.gravatar, r.is_admin);
             });
             return false;
         });
@@ -138,11 +138,19 @@ var chat = {
             return false;
         });
 
+        // Go to admin area
+
+        $('a.adminButton').live('click', function () {
+            console.log("Admin!");
+
+            return false;
+        });
+
         // Checking whether the user is already logged (browser refresh)
 
         $.chatGET('checkLogged', function (r) {
             if (r.logged) {
-                chat.login(r.loggedAs.name, r.loggedAs.gravatar);
+                chat.login(r.loggedAs.name, r.loggedAs.gravatar, r.loggedAs.is_admin);
             }
         });
 
@@ -161,10 +169,11 @@ var chat = {
     // The login method hides displays the
     // user's login data and shows the submit form
 
-    login: function (name, gravatar) {
+    login: function (name, gravatar, isAdmin) {
 
         chat.data.name = name;
         chat.data.gravatar = gravatar;
+        chat.data.isAdmin = isAdmin;
         $('#chatTopBar').html(chat.render('loginTopBar', chat.data));
 
 
@@ -186,8 +195,11 @@ var chat = {
             case 'loginTopBar':
                 arr = [
                     '<span><img src="', params.gravatar, '" width="23" height="23" />',
-                    '<span class="name">', params.name,
-                    '</span><a href="" class="logoutButton rounded">Logout</a></span>'];
+                    '<span class="name">', params.name, '</span>'];
+                if (params.isAdmin) {
+                    arr.push('<a href="" class="adminButton rounded">Admin</a>');
+                }
+                arr.push('<a href="" class="logoutButton rounded">Logout</a></span>');
                 break;
 
             case 'chatLine':

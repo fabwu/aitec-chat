@@ -21,13 +21,15 @@ class Chat
 
         $_SESSION['user'] = array(
             'name' => $user->getName(),
-            'gravatar' => $user->getName()
+            'gravatar' => $user->getName(),
+            'is_admin' => $user->isAdmin()
         );
 
         return array(
             'status' => 1,
             'name' => $user->getName(),
-            'gravatar' => Chat::gravatarFromHash($user->getGravatar())
+            'gravatar' => Chat::gravatarFromHash($user->getGravatar()),
+            'is_admin' => $user->isAdmin()
         );
     }
 
@@ -84,7 +86,8 @@ class Chat
             $response['logged'] = true;
             $response['loggedAs'] = array(
                 'name' => $_SESSION['user']['name'],
-                'gravatar' => Chat::gravatarFromHash($_SESSION['user']['gravatar'])
+                'gravatar' => Chat::gravatarFromHash($_SESSION['user']['gravatar']),
+                'is_admin' => $_SESSION['user']['is_admin']
             );
         }
 

@@ -7,6 +7,7 @@ class ChatUser extends ChatBase
     protected $gravatar = '';
     protected $email = '';
     protected $password = '';
+    protected $is_admin = false;
 
     public static function get($name)
     {
@@ -18,7 +19,8 @@ class ChatUser extends ChatBase
             'name' => $object->name,
             'gravatar' => $object->gravatar,
             'email' => $object->email,
-            'password' => $object->password
+            'password' => $object->password,
+            'is_admin' => $object->is_admin
         ));
 
         return $user;
@@ -95,6 +97,14 @@ class ChatUser extends ChatBase
     public function getPassword()
     {
         return $this->password;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isAdmin()
+    {
+        return $this->is_admin;
     }
 }
 

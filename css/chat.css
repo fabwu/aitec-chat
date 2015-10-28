@@ -214,6 +214,30 @@ a.logoutButton:hover {
     box-shadow: 0 0 7px #666 inset;
 }
 
+a.adminButton {
+    background-color: #bbb;
+    border: 1px solid #eee !important;
+    color: #FFFFFF !important;
+    font-size: 12px;
+    padding: 5px 9px;
+    position: absolute;
+    right: 80px;
+    text-shadow: 1px 1px 0 #888;
+    top: 7px;
+
+    -moz-box-shadow: 0 0 7px #888 inset;
+    -webkit-box-shadow: 0 0 7px #888 inset;
+    box-shadow: 0 0 7px #888 inset;
+}
+
+a.adminButton:hover {
+    text-shadow: 1px 1px 0 #888;
+
+    -moz-box-shadow: 0 0 7px #666 inset;
+    -webkit-box-shadow: 0 0 7px #666 inset;
+    box-shadow: 0 0 7px #666 inset;
+}
+
 #chatContainer .blueButton {
     background: url('../img/button_blue.png') no-repeat;
     border: none !important;
