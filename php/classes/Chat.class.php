@@ -13,20 +13,21 @@ class Chat
 
         $user = ChatUser::get($name);
 
-        if ($user == null || $password != $user->password) {
+        if ($user == null || $password != $user->getPassword()) {
             throw new Exception('Your nickname or password is invalid.');
-
         }
 
+        $user->login();
+
         $_SESSION['user'] = array(
-            'name' => $user->name,
-            'gravatar' => $user->gravatar
+            'name' => $user->getName(),
+            'gravatar' => $user->getName()
         );
 
         return array(
             'status' => 1,
-            'name' => $user->name,
-            'gravatar' => Chat::gravatarFromHash($user->gravatar)
+            'name' => $user->getName(),
+            'gravatar' => Chat::gravatarFromHash($user->getGravatar())
         );
     }
 
@@ -92,6 +93,12 @@ class Chat
 
     public static function logout()
     {
+        $name = $_SESSION['user']['name'];
+        $user = new ChatUser(array(
+            'name' => $name
+        ));
+        $user->logout();
+
         $_SESSION = array();
         unset($_SESSION);
 
@@ -130,13 +137,10 @@ class Chat
             $user->update();
         }
 
-        // Deleting chats older than 5 minutes and users inactive for 30 seconds
-
+        // Deleting chats older than 5 minutes
         DB::query("DELETE FROM webchat_lines WHERE ts < SUBTIME(NOW(),'0:5:0')");
-        //TODO User should get logged out not deleted
-        // DB::query("DELETE FROM webchat_users WHERE last_activity < SUBTIME(NOW(),'0:0:30')");
 
-        $result = DB::query('SELECT * FROM webchat_users ORDER BY name ASC LIMIT 18');
+        $result = DB::query('SELECT * FROM webchat_users WHERE login = TRUE ORDER BY name ASC LIMIT 18');
 
         $users = array();
         while ($user = $result->fetch_object()) {
@@ -146,7 +150,7 @@ class Chat
 
         return array(
             'users' => $users,
-            'total' => DB::query('SELECT COUNT(*) as cnt FROM webchat_users')->fetch_object()->cnt
+            'total' => DB::query('SELECT COUNT(*) as cnt FROM webchat_users WHERE login = TRUE')->fetch_object()->cnt
         );
     }
 

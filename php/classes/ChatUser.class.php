@@ -12,9 +12,26 @@ class ChatUser extends ChatBase
     {
         $result = DB::query("SELECT * FROM webchat_users WHERE name = '" . DB::esc($name) . "'");
 
-        $user = $result->fetch_object();
+        $object = $result->fetch_object();
+
+        $user = new ChatUser(array(
+            'name' => $object->name,
+            'gravatar' => $object->gravatar,
+            'email' => $object->email,
+            'password' => $object->password
+        ));
 
         return $user;
+    }
+
+    public function login()
+    {
+        DB::query("UPDATE webchat_users SET login=TRUE WHERE name = '" . DB::esc($this->name) . "'");
+    }
+
+    public function logout()
+    {
+        DB::query("UPDATE webchat_users SET login=FALSE WHERE name = '" . DB::esc($this->name) . "'");
     }
 
     public function save()
@@ -46,6 +63,38 @@ class ChatUser extends ChatBase
     public function delete()
     {
         DB::query("DELETE FROM webchat_users WHERE name = '" . DB::esc($this->name) . "'");
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGravatar()
+    {
+        return $this->gravatar;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
     }
 }
 

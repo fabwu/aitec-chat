@@ -337,7 +337,7 @@ var chat = {
 
             $('#chatUsers').html(users.join(''));
 
-            setTimeout(callback, 15000);
+            setTimeout(callback, 1000);
         });
     },
 
