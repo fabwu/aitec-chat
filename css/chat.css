@@ -39,6 +39,12 @@
     margin-bottom: 20px;
 }
 
+#userLineHolder {
+    height: 360px;
+    width: 350px;
+    margin-bottom: 20px;
+}
+
 .chat {
     background: url('../img/chat_line_bg.jpg') repeat-x #d5d5d5;
     min-height: 24px;

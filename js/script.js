@@ -138,14 +138,6 @@ var chat = {
             return false;
         });
 
-        // Go to admin area
-
-        $('a.adminButton').live('click', function () {
-            console.log("Admin!");
-
-            return false;
-        });
-
         // Checking whether the user is already logged (browser refresh)
 
         $.chatGET('checkLogged', function (r) {
@@ -197,7 +189,7 @@ var chat = {
                     '<span><img src="', params.gravatar, '" width="23" height="23" />',
                     '<span class="name">', params.name, '</span>'];
                 if (params.isAdmin) {
-                    arr.push('<a href="" class="adminButton rounded">Admin</a>');
+                    arr.push('<a href="admin.html" class="adminButton rounded">Admin</a>');
                 }
                 arr.push('<a href="" class="logoutButton rounded">Logout</a></span>');
                 break;
