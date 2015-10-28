@@ -58,6 +58,10 @@ try {
             $response = Chat::getUsers();
             break;
 
+        case 'getLoggedInUsers':
+            $response = Chat::getLoggedInUsers();
+            break;
+
         case 'getChats':
             $response = Chat::getChats($_GET['lastID']);
             break;

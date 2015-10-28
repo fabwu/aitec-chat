@@ -9,6 +9,19 @@ class ChatUser extends ChatBase
     protected $password = '';
     protected $is_admin = false;
 
+    public static function getAll()
+    {
+        $result = DB::query("SELECT * FROM webchat_users;");
+
+        $users = array();
+        while($user = $result->fetch_object()) {
+            $user->gravatar = Chat::gravatarFromHash($user->gravatar, 30);
+            $users[] = $user;
+        }
+
+        return $users;
+    }
+
     public static function get($name)
     {
         $result = DB::query("SELECT * FROM webchat_users WHERE name = '" . DB::esc($name) . "'");

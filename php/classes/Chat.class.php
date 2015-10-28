@@ -133,7 +133,7 @@ class Chat
         );
     }
 
-    public static function getUsers()
+    public static function getLoggedInUsers()
     {
         if ($_SESSION['user']['name']) {
             $user = new ChatUser(array('name' => $_SESSION['user']['name']));
@@ -154,6 +154,16 @@ class Chat
         return array(
             'users' => $users,
             'total' => DB::query('SELECT COUNT(*) as cnt FROM webchat_users WHERE login = TRUE')->fetch_object()->cnt
+        );
+    }
+
+    public static function getUsers()
+    {
+        $users = ChatUser::getAll();
+
+        return array(
+            'users' => $users,
+
         );
     }
 

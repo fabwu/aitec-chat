@@ -39,6 +39,8 @@ var chat = {
             }
         });
 
+        this.getUsers();
+
     },
 
     // The login method hides displays the
@@ -50,14 +52,6 @@ var chat = {
         chat.data.gravatar = gravatar;
         chat.data.isAdmin = isAdmin;
         $('#chatTopBar').html(chat.render('loginTopBar', chat.data));
-
-
-        $('#registerForm').fadeOut();
-        $('#loginForm').fadeOut(function () {
-            $('#submitForm').fadeIn();
-            $('#chatText').focus();
-        });
-
     },
 
     // The render method generates the HTML markup
@@ -77,17 +71,12 @@ var chat = {
                 arr.push('<a href="" class="logoutButton rounded">Logout</a></span>');
                 break;
 
-            case 'chatLine':
-                arr = [
-                    '<div class="chat chat-', params.id, ' rounded"><span class="gravatar"><img src="', params.gravatar,
-                    '" width="23" height="23" onload="this.style.visibility=\'visible\'" />', '</span><span class="author">', params.author,
-                    ':</span><span class="text">', params.text, '</span><span class="time">', params.time, '</span></div>'];
-                break;
-
             case 'user':
                 arr = [
-                    '<div class="user" title="', params.name, '"><img src="',
-                    params.gravatar, '" width="30" height="30" onload="this.style.visibility=\'visible\'" /></div>'
+                    '<tr>',
+                    '<td><img src="', params.gravatar, '" width="30" height="30" onload="this.style.visibility=\'visible\'" /></td>',
+                    '<td>', params.name, '</td>',
+                    '</tr>'
                 ];
                 break;
         }
@@ -105,24 +94,17 @@ var chat = {
 
             var users = [];
 
+            users.push("<tr><th></th><th>Name</th></tr>")
+
             for (var i = 0; i < r.users.length; i++) {
                 if (r.users[i]) {
                     users.push(chat.render('user', r.users[i]));
                 }
             }
 
-            var message = '';
+            console.log(users);
 
-            if (r.total < 1) {
-                message = 'No one is online';
-            }
-            else {
-                message = r.total + ' ' + (r.total == 1 ? 'person' : 'people') + ' online';
-            }
-
-            users.push('<p class="count">' + message + '</p>');
-
-            $('#chatUsers').html(users.join(''));
+            $('#userTable').html(users.join(''));
 
             setTimeout(callback, 1000);
         });

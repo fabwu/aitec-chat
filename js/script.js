@@ -318,7 +318,7 @@ var chat = {
     // Requesting a list with all the users.
 
     getUsers: function (callback) {
-        $.chatGET('getUsers', function (r) {
+        $.chatGET('getLoggedInUsers', function (r) {
 
             var users = [];
 
