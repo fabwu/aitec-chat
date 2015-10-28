@@ -3,18 +3,18 @@
 class ChatUser extends ChatBase
 {
 
-    protected $name = '';
-    protected $gravatar = '';
-    protected $email = '';
-    protected $password = '';
-    protected $is_admin = false;
+    public $name = '';
+    public $gravatar = '';
+    public $email = '';
+    public $password = '';
+    public $is_admin = false;
 
     public static function getAll()
     {
         $result = DB::query("SELECT * FROM webchat_users;");
 
         $users = array();
-        while($user = $result->fetch_object()) {
+        while ($user = $result->fetch_object()) {
             $user->gravatar = Chat::gravatarFromHash($user->gravatar, 30);
             $users[] = $user;
         }
@@ -80,45 +80,6 @@ class ChatUser extends ChatBase
         DB::query("DELETE FROM webchat_users WHERE name = '" . DB::esc($this->name) . "'");
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getGravatar()
-    {
-        return $this->gravatar;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isAdmin()
-    {
-        return $this->is_admin;
-    }
 }
 
 ?>

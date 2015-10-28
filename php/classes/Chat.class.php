@@ -13,23 +13,23 @@ class Chat
 
         $user = ChatUser::get($name);
 
-        if ($user == null || $password != $user->getPassword()) {
+        if ($user == null || $password != $user->password) {
             throw new Exception('Your nickname or password is invalid.');
         }
 
         $user->login();
 
         $_SESSION['user'] = array(
-            'name' => $user->getName(),
-            'gravatar' => $user->getName(),
-            'is_admin' => $user->isAdmin()
+            'name' => $user->name,
+            'gravatar' => $user->gravatar,
+            'is_admin' => $user->is_admin
         );
 
         return array(
             'status' => 1,
-            'name' => $user->getName(),
-            'gravatar' => Chat::gravatarFromHash($user->getGravatar()),
-            'is_admin' => $user->isAdmin()
+            'name' => $user->name,
+            'gravatar' => Chat::gravatarFromHash($user->gravatar),
+            'is_admin' => $user->is_admin
         );
     }
 
@@ -163,7 +163,6 @@ class Chat
 
         return array(
             'users' => $users,
-
         );
     }
 
