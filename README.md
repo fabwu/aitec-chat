@@ -20,7 +20,7 @@ Ergänzen der Codebasis mit einer Benutzerverwaltung mit folgenden Funktionen:
 - [X] Registrierung
 - [ ] Freischaltung von neuen Usern durch Admin
 - [ ] Sperren/Löschen von Usern durch Admin
-- [ ] Adminzugang
+- [X] Adminzugang
 - [ ] Solide Inputvalidation, sowohl bei der Registrierung als auch im Chat selbst
 
 Hidden Agenda:
