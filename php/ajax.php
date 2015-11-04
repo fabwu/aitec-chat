@@ -62,6 +62,10 @@ try {
             $response = Chat::activateUser($_POST['name'], $_POST['isActive']);
             break;
 
+        case 'deleteUser':
+            $response = Chat::deleteUser($_POST['name']);
+            break;
+
         case 'getLoggedInUsers':
             $response = Chat::getLoggedInUsers();
             break;

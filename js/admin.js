@@ -52,6 +52,29 @@ var chat = {
             return false;
         }.bind(this));
 
+        $('a.deleteButton').live('click', function (event) {
+            var username = $(event.target).attr("data-username");
+
+            var user = {
+                name: username
+            };
+
+            console.log(user);
+
+            $.chatPOST('deleteUser', user, function (r) {
+                if (r.error) {
+                    chat.displayError(r.error);
+                } else {
+                    this.getUsers();
+                    chat.displaySuccess("Delete user successful.");
+                }
+
+            }.bind(this));
+
+
+            return false;
+        }.bind(this));
+
         // Checking whether the user is already logged (browser refresh)
 
         $.chatGET('checkLogged', function (r) {
@@ -70,7 +93,6 @@ var chat = {
     // user's login data and shows the submit form
 
     login: function (name, gravatar, isAdmin) {
-
         chat.data.name = name;
         chat.data.gravatar = gravatar;
         chat.data.isAdmin = isAdmin;
@@ -100,13 +122,12 @@ var chat = {
                     '<td><img src="', params.gravatar, '" width="30" height="30" onload="this.style.visibility=\'visible\'" /></td>',
                     '<td>', params.name, '</td>',
                     '<td>',
-                    '<a href=""  class="activateButton" data-username="',
-                    params.name,
-                    '" data-is-active="',
-                    params.is_active,
-                    '">',
+                    '<a href=""  class="activateButton" data-username="', params.name, '" data-is-active="', params.is_active, '">',
                     params.is_active,
                     '</a>',
+                    '</td>',
+                    '<td>',
+                    '<a href=""  class="deleteButton" data-username="', params.name, '">Delete</a>',
                     '</td>',
                     '</tr>'
                 ];

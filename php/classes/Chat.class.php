@@ -200,6 +200,19 @@ class Chat
         );
     }
 
+    public static function deleteUser($name)
+    {
+        $user = ChatUser::get($name);
+
+        if(is_null($user)) {
+            throw new Exception("Could not find user.");
+        }
+
+        $user->delete();
+
+        return array();
+    }
+
     public static function getChats($lastID)
     {
         $lastID = (int)$lastID;
