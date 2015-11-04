@@ -29,6 +29,29 @@ var chat = {
             return false;
         });
 
+        $('a.activateButton').live('click', function (event) {
+            var username = $(event.target).attr("data-username");
+            var isActive = $(event.target).attr("data-is-active") == 1;
+
+            var user = {
+                name: username,
+                isActive: !isActive
+            };
+
+            $.chatPOST('activateUser', user, function (r) {
+                if (r.error) {
+                    chat.displayError(r.error);
+                } else {
+                    this.getUsers();
+                    chat.displaySuccess("Activation successful.");
+                }
+
+            }.bind(this));
+
+
+            return false;
+        }.bind(this));
+
         // Checking whether the user is already logged (browser refresh)
 
         $.chatGET('checkLogged', function (r) {
@@ -76,6 +99,15 @@ var chat = {
                     '<tr>',
                     '<td><img src="', params.gravatar, '" width="30" height="30" onload="this.style.visibility=\'visible\'" /></td>',
                     '<td>', params.name, '</td>',
+                    '<td>',
+                    '<a href=""  class="activateButton" data-username="',
+                    params.name,
+                    '" data-is-active="',
+                    params.is_active,
+                    '">',
+                    params.is_active,
+                    '</a>',
+                    '</td>',
                     '</tr>'
                 ];
                 break;
@@ -94,7 +126,7 @@ var chat = {
 
             var users = [];
 
-            users.push("<tr><th></th><th>Name</th></tr>")
+            users.push("<tr><th></th><th>Name</th><th>Activated</th></tr>")
 
             for (var i = 0; i < r.users.length; i++) {
                 if (r.users[i]) {

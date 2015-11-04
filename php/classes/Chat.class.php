@@ -17,7 +17,7 @@ class Chat
             throw new Exception('Your nickname or password is invalid.');
         }
 
-        if(!$user->is_active) {
+        if (!$user->is_active) {
             throw new Exception("Your account is not active.");
         }
 
@@ -49,7 +49,7 @@ class Chat
             throw new Exception('Fill in all the required fields.');
         }
 
-        if(!ctype_alnum($name)) {
+        if (!ctype_alnum($name)) {
             throw new Exception("Nickname not alphanumeric.");
         }
 
@@ -57,7 +57,7 @@ class Chat
             throw new Exception('Your email is invalid.');
         }
 
-        if(strcmp($password, $confirmPassword) != 0) {
+        if (strcmp($password, $confirmPassword) != 0) {
             throw new Exception("Passwords don't match.");
         }
 
@@ -86,7 +86,11 @@ class Chat
     {
         $response = array('logged' => false);
 
-        if ($_SESSION['user']['name']) {
+        $username = $_SESSION['user']['name'];
+
+        $user = ChatUser::get($username);
+
+        if ($user->login) {
             $response['logged'] = true;
             $response['loggedAs'] = array(
                 'name' => $_SESSION['user']['name'],
@@ -114,7 +118,11 @@ class Chat
 
     public static function submitChat($chatText)
     {
-        if (!$_SESSION['user']) {
+        $username = $_SESSION['user']['name'];
+
+        $user = ChatUser::get($username);
+
+        if (!$user->login) {
             throw new Exception('You are not logged in');
         }
 
@@ -139,11 +147,6 @@ class Chat
 
     public static function getLoggedInUsers()
     {
-        if ($_SESSION['user']['name']) {
-            $user = new ChatUser(array('name' => $_SESSION['user']['name']));
-            $user->update();
-        }
-
         // Deleting chats older than 5 minutes
         DB::query("DELETE FROM webchat_lines WHERE ts < SUBTIME(NOW(),'0:5:0')");
 
@@ -157,7 +160,7 @@ class Chat
 
         return array(
             'users' => $users,
-            'total' => DB::query('SELECT COUNT(*) as cnt FROM webchat_users WHERE login = TRUE')->fetch_object()->cnt
+            'total' => DB::query('SELECT COUNT(*) AS cnt FROM webchat_users WHERE login = TRUE')->fetch_object()->cnt
         );
     }
 
@@ -167,6 +170,33 @@ class Chat
 
         return array(
             'users' => $users,
+        );
+    }
+
+    public static function activateUser($name, $is_active)
+    {
+        if (empty($name)) {
+            throw new Exception("Could not activate user. Empty name.");
+        }
+
+        $user = ChatUser::get($name);
+
+        if(is_null($user)) {
+            throw new Exception("Could not find user.");
+        }
+
+        $is_active = $is_active === 'true'? true: false;
+
+        if($is_active == false) {
+            $user->logout();
+        }
+
+        $user->is_active = $is_active;
+        $user->update();
+
+        return array(
+            'name' => $user->name,
+            'is_active' => $user->is_active
         );
     }
 

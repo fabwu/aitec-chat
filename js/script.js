@@ -113,8 +113,12 @@ var chat = {
                 $('#chatText').val('');
                 $('div.chat-' + tempID).remove();
 
-                params['id'] = r.insertID;
-                chat.addChatLine($.extend({}, params));
+                if (r.error) {
+                    chat.displayError(r.error);
+                } else {
+                    params['id'] = r.insertID;
+                    chat.addChatLine($.extend({}, params));
+                }
             });
 
             return false;
