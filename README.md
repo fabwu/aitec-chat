@@ -18,8 +18,9 @@ Eine PHP-Übung welche im Modul AITEC an der Hochschule Luzern bearbeitet wird.
 
 Ergänzen der Codebasis mit einer Benutzerverwaltung mit folgenden Funktionen:
 - [X] Registrierung
-- [ ] Freischaltung von neuen Usern durch Admin
-- [ ] Sperren/Löschen von Usern durch Admin
+- [X] Freischaltung von neuen Usern durch Admin
+- [X] Sperren von Usern durch Admin
+- [ ] Löschen von Usern durch Admin
 - [X] Adminzugang
 - [ ] Solide Inputvalidation, sowohl bei der Registrierung als auch im Chat selbst
 
