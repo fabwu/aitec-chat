@@ -22,8 +22,8 @@ Ergänzen der Codebasis mit einer Benutzerverwaltung mit folgenden Funktionen:
 - [X] Sperren von Usern durch Admin
 - [X] Löschen von Usern durch Admin
 - [X] Adminzugang
-- [ ] Solide Inputvalidation, sowohl bei der Registrierung als auch im Chat selbst
+- [X] Solide Inputvalidation, sowohl bei der Registrierung als auch im Chat selbst
 
 Hidden Agenda:
-- [ ] Abhängigkeiten von Libraries im Netz lösen
+- [X] Abhängigkeiten von Libraries im Netz lösen
 - [X] Rausfinden, was es mit diesen Gravataren auf sich hat
