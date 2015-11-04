@@ -35,11 +35,19 @@ try {
     switch ($_GET['action']) {
 
         case 'login':
-            $response = Chat::login($_POST['name'], $_POST['password']);
+            $username = secureInput($_POST['name']);
+            $password = secureInput($_POST['password']);
+
+            $response = Chat::login($username, $password);
             break;
 
         case 'register':
-            $response = Chat::register($_POST['name'], $_POST['email'], $_POST['password'], $_POST['confirmPassword']);
+            $username = secureInput($_POST['name']);
+            $email = secureInput($_POST['email']);
+            $password = secureInput($_POST['password']);
+            $confirm_password = secureInput($_POST['confirmPassword']);
+
+            $response = Chat::register($username, $email, $password, $confirm_password);
             break;
 
         case 'checkLogged':
@@ -51,7 +59,9 @@ try {
             break;
 
         case 'submitChat':
-            $response = Chat::submitChat($_POST['chatText']);
+            $chat_text = secureInput($_POST['chatText']);
+
+            $response = Chat::submitChat($chat_text);
             break;
 
         case 'getUsers':
@@ -59,11 +69,16 @@ try {
             break;
 
         case 'activateUser':
-            $response = Chat::activateUser($_POST['name'], $_POST['isActive']);
+            $username = secureInput($_POST['name']);
+            $is_active = $_POST['isActive'] === 'true' ? true : false;
+
+            $response = Chat::activateUser($username, $is_active);
             break;
 
         case 'deleteUser':
-            $response = Chat::deleteUser($_POST['name']);
+            $username = secureInput($_POST['name']);
+
+            $response = Chat::deleteUser($username);
             break;
 
         case 'getLoggedInUsers':
@@ -71,6 +86,8 @@ try {
             break;
 
         case 'getChats':
+            $lastID = (int)$lastID;
+
             $response = Chat::getChats($_GET['lastID']);
             break;
 
@@ -81,6 +98,13 @@ try {
     echo json_encode($response);
 } catch (Exception $e) {
     die(json_encode(array('error' => $e->getMessage())));
+}
+
+
+function secureInput($untrusted_input)
+{
+    $trimmed_input = trim($untrusted_input);
+    return htmlspecialchars($trimmed_input, ENT_QUOTES);
 }
 
 ?>

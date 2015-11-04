@@ -66,7 +66,6 @@ class Chat
         $user = new ChatUser(array(
             'name' => $name,
             'email' => $email,
-            //TODO hash PW
             'password' => $password,
             'gravatar' => $gravatar
         ));
@@ -131,8 +130,8 @@ class Chat
         }
 
         $chat = new ChatLine(array(
-            'author' => $_SESSION['user']['name'],
-            'gravatar' => $_SESSION['user']['gravatar'],
+            'author' => $user->name,
+            'gravatar' => $user->gravatar,
             'text' => $chatText
         ));
 
@@ -175,19 +174,13 @@ class Chat
 
     public static function activateUser($name, $is_active)
     {
-        if (empty($name)) {
-            throw new Exception("Could not activate user. Empty name.");
-        }
-
         $user = ChatUser::get($name);
 
-        if(is_null($user)) {
+        if (is_null($user)) {
             throw new Exception("Could not find user.");
         }
 
-        $is_active = $is_active === 'true'? true: false;
-
-        if($is_active == false) {
+        if ($is_active == false) {
             $user->logout();
         }
 
@@ -204,7 +197,7 @@ class Chat
     {
         $user = ChatUser::get($name);
 
-        if(is_null($user)) {
+        if (is_null($user)) {
             throw new Exception("Could not find user.");
         }
 
@@ -215,9 +208,7 @@ class Chat
 
     public static function getChats($lastID)
     {
-        $lastID = (int)$lastID;
-
-        $result = DB::query('SELECT * FROM webchat_lines WHERE id > ' . $lastID . ' ORDER BY id ASC');
+        $result = DB::query('SELECT * FROM webchat_lines WHERE id > ' . DB::esc($lastID) . ' ORDER BY id ASC');
 
         $chats = array();
         while ($chat = $result->fetch_object()) {
