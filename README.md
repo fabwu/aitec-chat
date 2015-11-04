@@ -20,7 +20,7 @@ Ergänzen der Codebasis mit einer Benutzerverwaltung mit folgenden Funktionen:
 - [X] Registrierung
 - [X] Freischaltung von neuen Usern durch Admin
 - [X] Sperren von Usern durch Admin
-- [ ] Löschen von Usern durch Admin
+- [X] Löschen von Usern durch Admin
 - [X] Adminzugang
 - [ ] Solide Inputvalidation, sowohl bei der Registrierung als auch im Chat selbst
 
